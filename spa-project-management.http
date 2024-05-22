@@ -1,0 +1,6 @@
+@spa_project_management_HostAddress = https://localhost:44339
+
+### Get Query
+
+GET {{spa_project_management_HostAddress}}/api/Users
+Accept: application/json
