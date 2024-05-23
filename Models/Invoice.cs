@@ -5,7 +5,7 @@ namespace spa_project_management.Models;
 
 public class Invoice
 {
-    [Key] public int InvoiceId { get; set; }
+    [Key] public int Id { get; set; }
 
     [Required] [ForeignKey("Project")] public int ProjectId { get; set; }
 
@@ -19,8 +19,11 @@ public class Invoice
 
     public DateTime? PaymentDate { get; set; } // Дата оплаты, если оплачено
 
-    public bool IsPaid { get; set; }
+    [Required]
+    [ForeignKey("InvoiceStatus")]
+    public int StatusId { get; set; }
 
     public Project? Project { get; set; }
     public User? Client { get; set; }
+    public InvoiceStatus? Status { get; set; }
 }
