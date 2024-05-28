@@ -6,19 +6,19 @@ namespace SpaProjectManagement.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class InvoicesController(IRepositoryManager repository) : ControllerBase
+public class InvoicesController(IInvoiceRepository repository) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Invoice>>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<Invoice>>> GetAllAsync(CancellationToken ct)
     {
-        var invoices = await repository.InvoiceRepository.GetAllAsync(cancellationToken);
+        var invoices = await repository.GetAllAsync(ct);
         return Ok(invoices);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Invoice>> GetById(int id)
+    public async Task<ActionResult<Invoice>> GetByIdAsync(int id, CancellationToken ct)
     {
-        var invoice = await repository.InvoiceRepository.GetByIdAsync(id);
+        var invoice = await repository.GetByIdAsync(id, ct);
         if (invoice == null)
         {
             return NotFound();
@@ -28,26 +28,23 @@ public class InvoicesController(IRepositoryManager repository) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(Invoice invoice)
+    public async Task<ActionResult> CreateAsync(Invoice invoice, CancellationToken ct)
     {
-        await repository.InvoiceRepository.AddAsync(invoice);
-        await repository.SaveAsync();
+        await repository.AddAsync(invoice, ct);
         return Created(string.Empty, invoice);
     }
 
     [HttpPut]
-    public async Task<ActionResult> Update(Invoice invoice)
+    public async Task<ActionResult> UpdateAsync(Invoice invoice, CancellationToken ct)
     {
-        repository.InvoiceRepository.Update(invoice);
-        await repository.SaveAsync();
+        await repository.UpdateAsync(invoice, ct);
         return NoContent();
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> DeleteAsync(int id, CancellationToken ct)
     {
-        await repository.InvoiceRepository.DeleteAsync(id);
-        await repository.SaveAsync();
+        await repository.DeleteAsync(id, ct);
         return NoContent();
     }
 }

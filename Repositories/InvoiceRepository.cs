@@ -4,41 +4,26 @@ using SpaProjectManagement.Models;
 
 namespace SpaProjectManagement.Repositories;
 
-public class InvoiceRepository(ApplicationContext context) : IInvoiceRepository
+public class InvoiceRepository(ApplicationContext context)
+    : BaseRepository<Invoice, ApplicationContext>(context), IInvoiceRepository
 {
-    public async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken cancellationToken)
+    private readonly ApplicationContext _context = context;
+
+    public new async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken ct = default)
     {
-        return await context.Invoices
+        return await _context.Invoices
             .Include(i => i.Project)
             .Include(i => i.Client)
             .Include(i => i.Status)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(ct);
     }
 
-    public async Task<Invoice?> GetByIdAsync(int id)
+    public override async Task<Invoice?> GetByIdAsync(int id, CancellationToken ct = default)
     {
-        return await context.Invoices
+        return await _context.Invoices
             .Include(i => i.Project)
             .Include(i => i.Client)
             .Include(i => i.Status)
-            .FirstOrDefaultAsync(i => i.Id == id);
-    }
-
-    public async Task AddAsync(Invoice invoice)
-    {
-        await context.Invoices.AddAsync(invoice);
-    }
-
-    public void Update(Invoice invoice)
-    {
-        context.Invoices.Update(invoice);
-    }
-
-    public async Task DeleteAsync(int id)
-    {
-        var invoice = new Invoice { Id = id };
-        context.Invoices.Attach(invoice);
-        context.Invoices.Remove(invoice);
-        await context.SaveChangesAsync();
+            .FirstOrDefaultAsync(i => i.Id == id, ct);
     }
 }
