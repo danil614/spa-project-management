@@ -1,8 +1,7 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SpaProjectManagement;
-using SpaProjectManagement.Interfaces;
-using SpaProjectManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,22 +11,21 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 // Добавляем контекст ApplicationContext в качестве сервиса в приложение
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection));
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services
     .AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions
         .ReferenceHandler = ReferenceHandler.Preserve);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Регистрация RepositoryManager
-builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+// Автоматическая регистрация репозиториев
+builder.Services.AddRepositories(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
