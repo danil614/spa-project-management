@@ -8,33 +8,35 @@ public abstract class BaseRepository<TEntity, TContext>(TContext context) : IBas
     where TEntity : BaseEntity, new()
     where TContext : DbContext
 {
+    protected readonly TContext Context = context;
+
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await context.Set<TEntity>().ToListAsync(cancellationToken);
+        return await Context.Set<TEntity>().ToListAsync(cancellationToken);
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await context.Set<TEntity>().FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
+        return await Context.Set<TEntity>().FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
     }
 
     public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        await context.Set<TEntity>().AddAsync(entity, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        await Context.Set<TEntity>().AddAsync(entity, cancellationToken);
+        await Context.SaveChangesAsync(cancellationToken);
     }
 
     public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        context.Set<TEntity>().Update(entity);
-        await context.SaveChangesAsync(cancellationToken);
+        Context.Set<TEntity>().Update(entity);
+        await Context.SaveChangesAsync(cancellationToken);
     }
 
     public virtual async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
         var entity = new TEntity { Id = id };
-        context.Set<TEntity>().Attach(entity);
-        context.Set<TEntity>().Remove(entity);
-        await context.SaveChangesAsync(cancellationToken);
+        Context.Set<TEntity>().Attach(entity);
+        Context.Set<TEntity>().Remove(entity);
+        await Context.SaveChangesAsync(cancellationToken);
     }
 }
