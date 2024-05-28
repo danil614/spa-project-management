@@ -7,7 +7,7 @@ namespace SpaProjectManagement.Repositories;
 public class InvoiceRepository(ApplicationContext context)
     : BaseRepository<Invoice, ApplicationContext>(context), IInvoiceRepository
 {
-    public new async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken ct = default)
+    public override async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken ct = default)
     {
         return await Context.Invoices
             .Include(i => i.Project)
