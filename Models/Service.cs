@@ -1,17 +1,22 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace spa_project_management.Models;
+namespace SpaProjectManagement.Models;
 
-public class Service
+[Index(nameof(Name), IsUnique = true)]
+public class Service : BaseEntity
 {
-    [Key] public int Id { get; set; }
+    [Required]
+    [ForeignKey("ServiceType")]
+    public int TypeId { get; set; }
 
-    [Required] [ForeignKey("ServiceType")] public int TypeId { get; set; }
+    [Required]
+    [StringLength(100)]
+    public string Name { get; set; }
 
-    [Required] [StringLength(100)] public required string Name { get; set; }
-
-    [StringLength(500)] public string? Description { get; set; }
+    [StringLength(500)]
+    public string? Description { get; set; }
 
     public ServiceType? Type { get; set; }
     public ICollection<Price>? Prices { get; set; }

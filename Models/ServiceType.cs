@@ -1,12 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
-namespace spa_project_management.Models;
+namespace SpaProjectManagement.Models;
 
-public class ServiceType
+[Index(nameof(Name), IsUnique = true)]
+public class ServiceType : BaseEntity
 {
-    [Key] public int Id { get; set; }
-
-    [Required] [StringLength(50)] public required string Name { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string Name { get; set; }
 
     public ICollection<Service>? Services { get; set; }
 }

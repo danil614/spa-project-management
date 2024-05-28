@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
-namespace spa_project_management.Models;
+namespace SpaProjectManagement.Models;
 
+[Index(nameof(Name), IsUnique = true)]
 public class Role
 {
     [Key] public int Id { get; set; }

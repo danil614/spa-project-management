@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using spa_project_management.Models;
+using SpaProjectManagement.Models;
 
-namespace spa_project_management.Controllers;
+namespace SpaProjectManagement.Controllers;
 
 [Route("api/[controller]")]
 public class UsersController(ApplicationContext context) : Controller
