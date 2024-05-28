@@ -1,6 +1,6 @@
-using spa_project_management.Models;
+using SpaProjectManagement.Models;
 
-namespace spa_project_management;
+namespace SpaProjectManagement;
 
 public static class TestDataGenerator
 {

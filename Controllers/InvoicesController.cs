@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
-using spa_project_management.Interfaces;
-using spa_project_management.Models;
+using SpaProjectManagement.Interfaces;
+using SpaProjectManagement.Models;
 
-namespace spa_project_management.Controllers;
+namespace SpaProjectManagement.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class InvoicesController(IRepositoryManager repository) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Invoice>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Invoice>>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var invoices = await repository.InvoiceRepository.GetAllAsync();
+        var invoices = await repository.InvoiceRepository.GetAllAsync(cancellationToken);
         return Ok(invoices);
     }
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace spa_project_management.Models;
+namespace SpaProjectManagement.Models;
 
 public class InvoiceStatus
 {

@@ -1,4 +1,4 @@
-namespace spa_project_management.Interfaces;
+namespace SpaProjectManagement.Interfaces;
 
 public interface IRepositoryManager
 {

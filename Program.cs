@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using spa_project_management;
-using spa_project_management.Interfaces;
-using spa_project_management.Repositories;
+using SpaProjectManagement;
+using SpaProjectManagement.Interfaces;
+using SpaProjectManagement.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

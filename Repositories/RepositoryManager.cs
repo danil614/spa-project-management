@@ -1,6 +1,6 @@
-using spa_project_management.Interfaces;
+using SpaProjectManagement.Interfaces;
 
-namespace spa_project_management.Repositories;
+namespace SpaProjectManagement.Repositories;
 
 public class RepositoryManager : IRepositoryManager
 {

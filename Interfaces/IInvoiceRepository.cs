@@ -1,10 +1,10 @@
-using spa_project_management.Models;
+using SpaProjectManagement.Models;
 
-namespace spa_project_management.Interfaces;
+namespace SpaProjectManagement.Interfaces;
 
 public interface IInvoiceRepository
 {
-    Task<IEnumerable<Invoice>> GetAllAsync();
+    Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken cancellationToken);
     Task<Invoice?> GetByIdAsync(int id);
     Task AddAsync(Invoice invoice);
     void Update(Invoice invoice);

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace spa_project_management.Models;
+namespace SpaProjectManagement.Models;
 
 [PrimaryKey(nameof(UserId), nameof(RoleId))]
 public class UserRole

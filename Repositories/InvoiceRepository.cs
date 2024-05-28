@@ -1,18 +1,18 @@
 using Microsoft.EntityFrameworkCore;
-using spa_project_management.Interfaces;
-using spa_project_management.Models;
+using SpaProjectManagement.Interfaces;
+using SpaProjectManagement.Models;
 
-namespace spa_project_management.Repositories;
+namespace SpaProjectManagement.Repositories;
 
 public class InvoiceRepository(ApplicationContext context) : IInvoiceRepository
 {
-    public async Task<IEnumerable<Invoice>> GetAllAsync()
+    public async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await context.Invoices
             .Include(i => i.Project)
             .Include(i => i.Client)
             .Include(i => i.Status)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<Invoice?> GetByIdAsync(int id)
