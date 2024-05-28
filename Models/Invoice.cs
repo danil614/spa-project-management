@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SpaProjectManagement.Models;
 
-public class Invoice
+public class Invoice : BaseEntity
 {
-    [Key] public int Id { get; set; }
-
     [Required] [ForeignKey("Project")] public int ProjectId { get; set; }
 
     [Required] [ForeignKey("User")] public int ClientId { get; set; }
