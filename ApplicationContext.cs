@@ -26,7 +26,7 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
             .HasIndex(p => new { p.ServiceId, p.EffectiveDate })
             .IsUnique();
 
-        // Настройка отношений для User и Project
+        // Настройка отношений для Project
         modelBuilder.Entity<Project>()
             .HasOne(p => p.Client)
             .WithMany(u => u.ClientProjects)
@@ -39,46 +39,18 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
             .HasForeignKey(p => p.ResponsibleEmployeeId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        // Добавление ролей
-        modelBuilder.Entity<Role>().HasData(
-            new Role { Id = 1, Name = "Client" },
-            new Role { Id = 2, Name = "Manager" },
-            new Role { Id = 3, Name = "Architect" }
-        );
+        // Генерируем тестовые данные
+        SeedData(modelBuilder);
+    }
 
-        // Добавление тестовых пользователей
-        modelBuilder.Entity<User>().HasData(
-            new User
-            {
-                Id = 1,
-                Name = "John Doe",
-                Email = "john.doe@example.com",
-                Phone = "1234567890",
-                Description = "Morning Client. Prefers morning appointments"
-            },
-            new User
-            {
-                Id = 2,
-                Name = "Jane Smith",
-                Email = "jane.smith@example.com",
-                Phone = "0987654321",
-                Description = "Expensive Project Manager"
-            },
-            new User
-            {
-                Id = 3,
-                Name = "Mike Johnson",
-                Email = "mike.johnson@example.com",
-                Phone = "1122334455",
-                Description = "Genius Architect"
-            }
-        );
-
-        // Добавление записей в UserRole
-        modelBuilder.Entity<UserRole>().HasData(
-            new UserRole { UserId = 1, RoleId = 1 }, // John Doe -> Client
-            new UserRole { UserId = 2, RoleId = 2 }, // Jane Smith -> Manager
-            new UserRole { UserId = 3, RoleId = 3 } // Mike Johnson -> Architect
-        );
+    private static void SeedData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ProjectStatus>().HasData(TestDataGenerator.GenerateProjectStatuses());
+        modelBuilder.Entity<Project>().HasData(TestDataGenerator.GenerateProjects());
+        modelBuilder.Entity<InvoiceStatus>().HasData(TestDataGenerator.GenerateInvoiceStatuses());
+        modelBuilder.Entity<Invoice>().HasData(TestDataGenerator.GenerateInvoices());
+        modelBuilder.Entity<Role>().HasData(TestDataGenerator.GenerateRoles());
+        modelBuilder.Entity<User>().HasData(TestDataGenerator.GenerateUsers());
+        modelBuilder.Entity<UserRole>().HasData(TestDataGenerator.GenerateUserRoles());
     }
 }
