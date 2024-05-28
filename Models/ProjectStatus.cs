@@ -1,12 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaProjectManagement.Models;
 
-public class ProjectStatus
+[Index(nameof(Name), IsUnique = true)]
+public class ProjectStatus : BaseEntity
 {
-    [Key] public int Id { get; set; }
-
-    [Required] [StringLength(50)] public required string Name { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string Name { get; set; }
 
     public ICollection<Project>? Projects { get; set; }
     public ICollection<ProjectService>? ProjectServices { get; set; }

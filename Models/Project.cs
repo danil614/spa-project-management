@@ -3,17 +3,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SpaProjectManagement.Models;
 
-public class Project
+public class Project : BaseEntity
 {
-    [Key] public int Id { get; set; }
+    [Required]
+    public int ClientId { get; set; }
 
-    [Required] [ForeignKey("User")] public int ClientId { get; set; }
+    [Required]
+    public int ResponsibleEmployeeId { get; set; }
 
-    [Required] [ForeignKey("User")] public int ResponsibleEmployeeId { get; set; }
+    [Required]
+    [StringLength(100)]
+    public string Name { get; set; }
 
-    [Required] [StringLength(100)] public required string Name { get; set; }
-
-    [Required] public DateTime StartDate { get; set; }
+    [Required]
+    public DateTime StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
 
@@ -22,13 +25,20 @@ public class Project
     public decimal Budget { get; set; } // Начальный бюджет клиента на проект
 
     [Required]
-    [ForeignKey("ProjectStatus")]
     public int StatusId { get; set; }
 
-    [StringLength(1000)] public string? Description { get; set; }
+    [StringLength(1000)]
+    public string? Description { get; set; }
 
+    [ForeignKey("ClientId")]
+    [InverseProperty("ClientProjects")]
     public User? Client { get; set; }
+
+    [ForeignKey("ResponsibleEmployeeId")]
+    [InverseProperty("ResponsibleProjects")]
     public User? ResponsibleEmployee { get; set; }
+
+    [ForeignKey("StatusId")]
     public ProjectStatus? Status { get; set; }
 
     public ICollection<ProjectService>? ProjectServices { get; set; }

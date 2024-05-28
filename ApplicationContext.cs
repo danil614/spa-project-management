@@ -21,24 +21,6 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
     {
         base.OnModelCreating(modelBuilder);
 
-        // Установка уникального ограничения на сочетание ServiceId и EffectiveDate
-        modelBuilder.Entity<Price>()
-            .HasIndex(p => new { p.ServiceId, p.EffectiveDate })
-            .IsUnique();
-
-        // Настройка отношений для Project
-        modelBuilder.Entity<Project>()
-            .HasOne(p => p.Client)
-            .WithMany(u => u.ClientProjects)
-            .HasForeignKey(p => p.ClientId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        modelBuilder.Entity<Project>()
-            .HasOne(p => p.ResponsibleEmployee)
-            .WithMany(u => u.ResponsibleProjects)
-            .HasForeignKey(p => p.ResponsibleEmployeeId)
-            .OnDelete(DeleteBehavior.SetNull);
-
         // Генерируем тестовые данные
         SeedData(modelBuilder);
     }

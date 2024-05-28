@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaProjectManagement.Models;
 
+[Index(nameof(Name), IsUnique = true)]
 public class InvoiceStatus : BaseEntity
 {
     [Required]
