@@ -11,7 +11,7 @@ namespace SpaProjectManagement.Repositories;
 /// <typeparam name="TEntity">Entity type</typeparam>
 /// <typeparam name="TContext">Database context type</typeparam>
 public abstract class BaseRepository<TEntity, TContext>(TContext context) : IBaseRepository<TEntity>
-    where TEntity : BaseEntity, new()
+    where TEntity : BaseEntity
     where TContext : DbContext
 {
     protected readonly TContext Context = context;
@@ -66,9 +66,8 @@ public abstract class BaseRepository<TEntity, TContext>(TContext context) : IBas
     /// <param name="cancellationToken">Cancellation token</param>
     public virtual async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        var entity = new TEntity { Id = id };
-        Context.Set<TEntity>().Attach(entity);
-        Context.Set<TEntity>().Remove(entity);
-        await Context.SaveChangesAsync(cancellationToken);
+        await Context.Set<TEntity>()
+            .Where(i => i.Id == id)
+            .ExecuteDeleteAsync(cancellationToken);
     }
 }
