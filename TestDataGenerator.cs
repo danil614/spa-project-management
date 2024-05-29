@@ -2,6 +2,9 @@ using SpaProjectManagement.Models;
 
 namespace SpaProjectManagement;
 
+/// <summary>
+/// Generates test data for the project.
+/// </summary>
 public static class TestDataGenerator
 {
     public static Invoice[] GenerateInvoices()

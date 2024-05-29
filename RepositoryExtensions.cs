@@ -3,6 +3,9 @@ using SpaProjectManagement.Interfaces;
 
 namespace SpaProjectManagement;
 
+/// <summary>
+/// Class with extension methods for IServiceCollection.
+/// </summary>
 public static class RepositoryExtensions
 {
     /// <summary>

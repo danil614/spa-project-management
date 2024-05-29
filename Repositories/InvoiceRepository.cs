@@ -4,9 +4,18 @@ using SpaProjectManagement.Models;
 
 namespace SpaProjectManagement.Repositories;
 
+/// <summary>
+/// Repository for <see cref="Invoice"/> model.
+/// </summary>
+/// <param name="context">Application database context</param>
 public class InvoiceRepository(ApplicationContext context)
     : BaseRepository<Invoice, ApplicationContext>(context), IInvoiceRepository
 {
+    /// <summary>
+    /// Gets all entities asynchronously from the database and returns them in a list. Includes project, client and status.
+    /// </summary>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>List of all entities</returns>
     public override async Task<IEnumerable<Invoice>> GetAllAsync(CancellationToken ct = default)
     {
         return await Context.Invoices
@@ -16,6 +25,12 @@ public class InvoiceRepository(ApplicationContext context)
             .ToListAsync(ct);
     }
 
+    /// <summary>
+    /// Gets an entity by id asynchronously from the database and returns it. Includes project, client and status.
+    /// </summary>
+    /// <param name="id">Id of the entity</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Found entity</returns>
     public override async Task<Invoice?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         return await Context.Invoices
