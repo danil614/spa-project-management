@@ -1,7 +1,7 @@
 using System.Reflection;
 using SpaProjectManagement.Interfaces;
 
-namespace SpaProjectManagement;
+namespace SpaProjectManagement.Extensions;
 
 /// <summary>
 /// Class with extension methods for IServiceCollection.
@@ -13,7 +13,7 @@ public static class RepositoryExtensions
     /// </summary>
     /// <param name="services">IServiceCollection instance</param>
     /// <param name="assembly">Assembly to scan for repositories</param>
-    public static void AddRepositories(this IServiceCollection services, Assembly assembly)
+    public static IServiceCollection AddRepositories(this IServiceCollection services, Assembly assembly)
     {
         var repositoryInterfaceType = typeof(IBaseRepository<>);
 
@@ -32,5 +32,7 @@ public static class RepositoryExtensions
                                                        t.GetGenericTypeDefinition() == repositoryInterfaceType));
             services.AddScoped(interfaceType, repositoryType);
         }
+
+        return services;
     }
 }

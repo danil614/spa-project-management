@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SpaProjectManagement;
+using SpaProjectManagement.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// Регистрация логирующего middleware
+app.UseLoggingMiddleware();
 
 app.MapControllers();
 
