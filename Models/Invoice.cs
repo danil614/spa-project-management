@@ -16,7 +16,7 @@ public class Invoice : BaseEntity
     public int ProjectId { get; set; }
 
     /// <summary>
-    /// If of attached client.
+    /// Id of attached client.
     /// </summary>
     [Required]
     [ForeignKey("User")]
