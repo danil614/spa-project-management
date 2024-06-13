@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SpaProjectManagement;
 using SpaProjectManagement.Extensions;
+using SpaProjectManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,17 +22,21 @@ builder.Services
         .ReferenceHandler = ReferenceHandler.Preserve);
 
 // Authentication with JWT
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+var jwtConfig = builder.Configuration.GetSection("JwtOptions");
+builder.Services.Configure<JwtOptions>(jwtConfig);
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidIssuer = AuthOptions.Issuer,
+            ValidIssuer = jwtConfig["Issuer"],
             ValidateAudience = true,
-            ValidAudience = AuthOptions.Audience,
+            ValidAudience = jwtConfig["Audience"],
             ValidateLifetime = true,
-            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            IssuerSigningKey = JwtProvider.GetSymmetricSecurityKey(jwtConfig["SecretKey"]),
             ValidateIssuerSigningKey = true
         };
     });

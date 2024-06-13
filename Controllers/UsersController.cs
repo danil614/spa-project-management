@@ -1,10 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SpaProjectManagement.Interfaces;
 using SpaProjectManagement.Models;
+using SpaProjectManagement.Services;
 
 namespace SpaProjectManagement.Controllers;
 
@@ -13,7 +11,8 @@ namespace SpaProjectManagement.Controllers;
 /// </summary>
 /// <param name="repository">User repository to use</param>
 [Route("api/[controller]")]
-public class UsersController(IUserRepository repository) : BaseController<User, IUserRepository>(repository)
+public class UsersController(IUserRepository repository, IJwtProvider jwtProvider)
+    : BaseController<User, IUserRepository>(repository)
 {
     /// <summary>
     /// Logins user and returns JWT token.
@@ -54,21 +53,7 @@ public class UsersController(IUserRepository repository) : BaseController<User, 
             return Unauthorized();
         }
 
-        var claims = new List<Claim>
-        {
-            new(ClaimsIdentity.DefaultNameClaimType, entity.Login),
-            new(ClaimsIdentity.DefaultRoleClaimType, role)
-        };
-        // Create the JWT and write it to a string
-        var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.Issuer,
-            audience: AuthOptions.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromDays(7)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                SecurityAlgorithms.HmacSha256));
-        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
+        var encodedJwt = jwtProvider.GenerateToken(entity.Login, role);
         var response = new
         {
             token = encodedJwt,
