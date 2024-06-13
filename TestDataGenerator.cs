@@ -173,4 +173,42 @@ public static class TestDataGenerator
             new ProjectStatus { Id = 4, Name = "Отменен" }
         ];
     }
+
+    public static Service[] GenerateServices()
+    {
+        return
+        [
+            new Service
+            {
+                Id = 1,
+                TypeId = 1,
+                Name = "Строительство Роскошного СПА",
+                Description = "Профессиональное строительство роскошного спа-комплекса"
+            },
+            new Service
+            {
+                Id = 2,
+                TypeId = 2,
+                Name = "Установка Устройств в СПА",
+                Description = "Установка современного оборудования в спа-центре"
+            },
+            new Service
+            {
+                Id = 3,
+                TypeId = 3,
+                Name = "Дизайн и Оформление СПА",
+                Description = "Индивидуальный дизайн и оформление вашего спа-комплекса"
+            }
+        ];
+    }
+
+    public static ServiceType[] GenerateServiceTypes()
+    {
+        return
+        [
+            new ServiceType { Id = 1, Name = "Роскошное строительство" },
+            new ServiceType { Id = 2, Name = "Установка оборудования" },
+            new ServiceType { Id = 3, Name = "Дизайн и оформление" }
+        ];
+    }
 }

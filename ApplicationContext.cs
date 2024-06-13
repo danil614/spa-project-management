@@ -34,5 +34,7 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
         modelBuilder.Entity<Role>().HasData(TestDataGenerator.GenerateRoles());
         modelBuilder.Entity<User>().HasData(TestDataGenerator.GenerateUsers());
         modelBuilder.Entity<UserRole>().HasData(TestDataGenerator.GenerateUserRoles());
+        modelBuilder.Entity<ServiceType>().HasData(TestDataGenerator.GenerateServiceTypes());
+        modelBuilder.Entity<Service>().HasData(TestDataGenerator.GenerateServices());
     }
 }
