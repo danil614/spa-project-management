@@ -10,6 +10,6 @@ namespace SpaProjectManagement.Controllers;
 /// </summary>
 /// <param name="repository">Invoice repository to use</param>
 [Route("api/[controller]")]
-[Authorize(Roles = RoleEnum.Manager)]
+[Authorize(Roles = RoleEnum.Manager + "," + RoleEnum.Admin)]
 public class InvoicesController(IInvoiceRepository repository)
     : BaseController<Invoice, IInvoiceRepository>(repository);
