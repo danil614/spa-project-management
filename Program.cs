@@ -1,6 +1,8 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SpaProjectManagement;
 using SpaProjectManagement.Extensions;
 
@@ -17,6 +19,24 @@ builder.Services
     .AddControllers()
     .AddJsonOptions(o => o.JsonSerializerOptions
         .ReferenceHandler = ReferenceHandler.Preserve);
+
+// Authentication with JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = AuthOptions.Issuer,
+            ValidateAudience = true,
+            ValidAudience = AuthOptions.Audience,
+            ValidateLifetime = true,
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            ValidateIssuerSigningKey = true
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,10 +55,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 // Регистрация логирующего middleware
 app.UseLoggingMiddleware();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

@@ -68,9 +68,9 @@ public static class TestDataGenerator
     {
         return
         [
-            new Role { Id = 1, Name = "Клиент" },
-            new Role { Id = 2, Name = "Менеджер" },
-            new Role { Id = 3, Name = "Архитектор" }
+            new Role { Id = 1, Name = "Клиент", SystemName = "Client" },
+            new Role { Id = 2, Name = "Менеджер", SystemName = "Manager" },
+            new Role { Id = 3, Name = "Администратор", SystemName = "Admin" }
         ];
     }
 
@@ -81,6 +81,8 @@ public static class TestDataGenerator
             new User
             {
                 Id = 1,
+                Login = "john.doe",
+                Password = "123456",
                 Name = "John Doe",
                 Email = "john.doe@example.com",
                 Phone = "1234567890",
@@ -89,6 +91,8 @@ public static class TestDataGenerator
             new User
             {
                 Id = 2,
+                Login = "jane.smith",
+                Password = "123456",
                 Name = "Jane Smith",
                 Email = "jane.smith@example.com",
                 Phone = "0987654321",
@@ -97,6 +101,8 @@ public static class TestDataGenerator
             new User
             {
                 Id = 3,
+                Login = "mike.johnson",
+                Password = "123456",
                 Name = "Mike Johnson",
                 Email = "mike.johnson@example.com",
                 Phone = "1122334455",
@@ -105,6 +111,8 @@ public static class TestDataGenerator
             new User
             {
                 Id = 4,
+                Login = "alice.brown",
+                Password = "123456",
                 Name = "Alice Brown",
                 Email = "alice.brown@example.com",
                 Phone = "5544332211",
@@ -119,7 +127,7 @@ public static class TestDataGenerator
         [
             new UserRole { UserId = 1, RoleId = 1 }, // John Doe -> Client
             new UserRole { UserId = 2, RoleId = 2 }, // Jane Smith -> Manager
-            new UserRole { UserId = 3, RoleId = 3 }, // Mike Johnson -> Architect
+            new UserRole { UserId = 3, RoleId = 3 }, // Mike Johnson -> Admin
             new UserRole { UserId = 4, RoleId = 1 } // Alice Brown -> Client
         ];
     }

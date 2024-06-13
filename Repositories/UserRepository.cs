@@ -35,4 +35,18 @@ public class UserRepository(ApplicationContext context)
             .Include(i => i.UserRoles)
             .FirstOrDefaultAsync(i => i.Id == id, ct);
     }
+
+    /// <summary>
+    /// Gets an user by login asynchronously from the database and returns it.
+    /// </summary>
+    /// <param name="login">Login of the user</param>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Found user</returns>
+    public async Task<User?> GetByLoginAsync(string login, CancellationToken ct = default)
+    {
+        return await Context.Users
+            .Include(i => i.UserRoles)!
+            .ThenInclude(i => i.Role)
+            .FirstOrDefaultAsync(i => i.Login == login, ct);
+    }
 }

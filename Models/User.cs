@@ -1,12 +1,29 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaProjectManagement.Models;
 
 /// <summary>
 /// User model class. Allows to create users with different roles.
 /// </summary>
+[Index(nameof(Login), IsUnique = true)]
 public class User : BaseEntity
 {
+    /// <summary>
+    /// Login of user.
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Login { get; set; }
+
+    /// <summary>
+    /// Password of user.
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+
     /// <summary>
     /// Name of user.
     /// </summary>
@@ -43,7 +60,7 @@ public class User : BaseEntity
     /// Collection of projects attached to this user as client.
     /// </summary>
     public ICollection<Project>? ClientProjects { get; set; }
-    
+
     /// <summary>
     /// Collection of projects that this user responsible for.
     /// </summary>
