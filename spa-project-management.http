@@ -6,6 +6,7 @@
 
 @client_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiam9obi5kb2UiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDbGllbnQiLCJleHAiOjE3MTg4NzQ3ODksImlzcyI6Ik15QXV0aFNlcnZlciIsImF1ZCI6Ik15QXV0aENsaWVudCJ9.TYjE3vvnzpEKHtBWHoHXShEpN5V_LDW8qy1ZzaVY35c
 
+
 ### Users
 GET {{spa_project_management_HostAddress}}/api/Users
 Authorization: Bearer {{admin_token}}
@@ -14,4 +15,9 @@ Accept: application/json
 ### Services
 GET {{spa_project_management_HostAddress}}/api/Services
 Authorization: Bearer {{manager_token}}
+Accept: application/json
+
+### Project statuses
+GET {{spa_project_management_HostAddress}}/api/ProjectStatuses
+Authorization: Bearer {{admin_token}}
 Accept: application/json
