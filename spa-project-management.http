@@ -22,6 +22,6 @@ Authorization: Bearer {{admin_token}}
 Accept: application/json
 
 ### Projects
-GET {{spa_project_management_HostAddress}}/api/Projects/2
-Authorization: Bearer {{client_token}}
+GET {{spa_project_management_HostAddress}}/api/Projects/excel
+Authorization: Bearer {{admin_token}}
 Accept: application/json
